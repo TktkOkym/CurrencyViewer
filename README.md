@@ -1,5 +1,7 @@
 # Currency Viewer
 
+<img src="https://github.com/TktkOkym/CurrencyViewer/blob/master/Screenshot_1.png" width="300" />
+
 ## Features
 * Display list of Currency Items, containing Currency and its amount
 * Update currency amount whenever user change input(EditText) or change currency(Spinner)
