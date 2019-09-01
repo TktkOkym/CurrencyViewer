@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    dataBinding {
+        enabled = true
+    }
+    defaultConfig {
+        applicationId "com.tktkokym.currencyviewer"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.returnDefaultValues = true
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+dependencies {
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "androidx.navigation:navigation-fragment:$rootProject.navigationVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.supportLibraryVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.supportLibraryVersion"
+    implementation "com.google.android.material:material:$rootProject.materiaDesignlVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // Koin
+    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
+
+    // Room components
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-rxjava2:$rootProject.roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
+
+    // Worker
+    implementation "android.arch.work:work-rxjava2:$rootProject.workManagerVersion"
+    implementation "android.arch.work:work-runtime-ktx:$rootProject.workManagerVersion"
+
+    // test
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation "androidx.test:core:$rootProject.test_core"
+    testImplementation "androidx.arch.core:core-testing:$rootProject.core_testing"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockito_core"
+    androidTestImplementation "com.android.support.test:rules:$rootProject.android_support_test"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.android_support_test"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:$rootProject.uiAutomatorVersion"
+}
