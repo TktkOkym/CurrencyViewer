@@ -8,9 +8,9 @@ import java.util.*
 
 // check
 fun Long?.isOld(): Boolean {
-    // 30 mins ago from current time to timestamp format
-    val thirtyMinsAgo = (Date().time - Constants.THIRTY_MINUTES) / 1000
-    this?.let { return it < thirtyMinsAgo }
+    // 30 minutes ago from current time to timestamp format
+    val thirtyMinutesAgo = (Date().time - Constants.THIRTY_MINUTES) / 1000
+    this?.let { return it < thirtyMinutesAgo }
     return false
 }
 
