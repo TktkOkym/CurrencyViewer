@@ -2,6 +2,7 @@ package com.tktkokym.currencyviewer.adapter
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.tktkokym.currencyviewer.util.getTargetCurrency
 import java.text.NumberFormat
 
 @BindingAdapter("numberWithComma")
@@ -11,5 +12,5 @@ fun setNumberWithComma(textView :TextView, number: Double) {
 
 @BindingAdapter("formatCurrency")
 fun formatCurrency(textView :TextView, currency: String) {
-    textView.text = currency.removeRange(0..2)
+    textView.text = currency.getTargetCurrency()
 }

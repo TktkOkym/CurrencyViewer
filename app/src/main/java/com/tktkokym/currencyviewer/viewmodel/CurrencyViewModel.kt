@@ -10,6 +10,8 @@ import com.tktkokym.currencyviewer.network.Status
 import com.tktkokym.currencyviewer.repository.CurrencyRepository
 import com.tktkokym.currencyviewer.util.DoubleTrigger
 import com.tktkokym.currencyviewer.util.convertToCurrencyList
+import com.tktkokym.currencyviewer.util.dateTimeToUnixTimeStamp
+import com.tktkokym.currencyviewer.util.getTargetCurrency
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.util.*
@@ -26,6 +28,7 @@ class CurrencyViewModel: ViewModel(), KoinComponent {
     val status: LiveData<Status> get() = _status
 
     init {
+        _status.postValue(Status.LOADING)
         requestPeriodicWorker(isReplace = false)
     }
 
@@ -39,7 +42,7 @@ class CurrencyViewModel: ViewModel(), KoinComponent {
 
     // currency name list for spinner
     val currencyNameList: LiveData<List<String>> = Transformations.switchMap(repository.getBaseCurrencyFromDB()) {
-        _currencyNameList.postValue(it?.rates?.map { rateItem -> rateItem.key.removeRange(0..2) })
+        _currencyNameList.postValue(it?.rates?.map { rateItem -> rateItem.key.getTargetCurrency() })
         return@switchMap _currencyNameList
     }
 
@@ -51,14 +54,17 @@ class CurrencyViewModel: ViewModel(), KoinComponent {
         if (currencyData != null && baseCurrentList.isNotEmpty()) {
             // get rates of selected currency
             val newRate =
-                baseCurrentList.find { item -> item.currency.removeRange(0..2) == currencyData.currency }?.rate ?: 1.0
+                baseCurrentList.find {
+                        item -> item.currency.getTargetCurrency() == currencyData.currency }?.rate ?: 1.0
 
             _selectedCurrencyList.postValue(
                 SelectedCurrencyList(
                     currencyData.currency,
-                    it.second?.timestamp ?: Date().time / 1000,
+                    it.second?.timestamp ?: Date().dateTimeToUnixTimeStamp(),
                     baseCurrentList.map { item ->
-                        item.copy(currency = item.currency, rate = item.rate / newRate * (currencyData.amount)) })
+                        item.copy(
+                            currency = item.currency,
+                            rate = item.rate / newRate * (currencyData.amount)) })
             )
 
             _status.postValue(Status.SUCCESS)
@@ -66,8 +72,8 @@ class CurrencyViewModel: ViewModel(), KoinComponent {
         return@switchMap _selectedCurrencyList
     }
 
-    fun setAmountCurrency(amount: Double?, currency: String) {
-        _amountCurrency.postValue(AmountCurrencyData(amount ?: 1.0, currency))
+    fun setAmountCurrency(amount: Double, currency: String) {
+        _amountCurrency.postValue(AmountCurrencyData(amount, currency))
     }
 
     data class AmountCurrencyData(val amount: Double, val currency: String)

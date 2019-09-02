@@ -108,7 +108,7 @@ class CurrencyViewerFragment : Fragment() {
             }
         })
 
-        //setup adapter initially or only when currency list response is changed
+        //setup adapter initially or only when list of currency response got changed
         var prevList = emptyList<String>()
         viewModel.currencyNameList.observe(this, Observer {
             if (!it.isNullOrEmpty() && prevList != it) {
@@ -141,6 +141,6 @@ class CurrencyViewerFragment : Fragment() {
 
     //update amount of each currency item by new input
     private fun requestCurrencyUpdate(input: String, currency: String) {
-        viewModel.setAmountCurrency(if (input.isBlank()) 0.0 else input.toDouble(), currency)
+        viewModel.setAmountCurrency(if (input.isWrongDoubleFormat()) 0.0 else input.toDouble(), currency)
     }
 }

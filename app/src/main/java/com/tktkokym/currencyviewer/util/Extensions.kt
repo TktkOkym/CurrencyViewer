@@ -14,8 +14,17 @@ fun Long?.isOld(): Boolean {
     return false
 }
 
-fun String.isWrongDoubleFormat(): Boolean {
-    return this == "00" || this == "." || this.count { it == '.' } > 1
+fun Date?.dateTimeToUnixTimeStamp(): Long {
+    val dateTime = this?.time
+    return if (dateTime != null) dateTime / 1000 else 0L
+}
+
+fun String?.getTargetCurrency(): String {
+    return if (this.isNullOrBlank()) "" else this.removeRange(0..2)
+}
+
+fun String?.isWrongDoubleFormat(): Boolean {
+    return this.isNullOrBlank() || this == "00" || this == "." || this.count { it == '.' } > 1
 }
 
 fun Map<String, Double>.convertToCurrencyList(): List<CurrencyItem> {
