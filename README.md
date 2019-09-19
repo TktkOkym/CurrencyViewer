@@ -10,7 +10,7 @@
 * Swipe to Refresh List to call api (replace worker)
 * Display timestamp of last updated (which is being updated once a day)
 
-## Libraries
+## Architecture & Libraries
 * [MVVM](https://github.com/googlesamples/android-architecture/tree/todo-mvvm-live-kotlin/) - Separate View from Model to have better **maintainability and testability**. More details in Implementation Details below.
 * [Single Activity Concept](https://www.youtube.com/watch?v=2k8x8V77CrU) / [Navigation Architecture Components](https://developer.android.com/guide/navigation/) - To **reduce memory** usage especially when navigating to multiple pages (use replace instead of add when moving to other pages). Easy data sharing between views. Reduce boilerplate codes. 
 * [ViewModel](https://developer.android.com/reference/androidx/lifecycle/ViewModel.html) - To store UI-related data. Data does not affected when **screen rotation** when using with LiveData
@@ -22,11 +22,12 @@
 * [Coroutine](https://kotlinlang.org/docs/reference/coroutines-overview.html) - lightweight thread, to do background work for tasks, such as Api Call, accessing RoomDB or heavy calculation
 * [Retrofit2](https://square.github.io/retrofit/) - Type-safe HTTP client for Android. 
 * [Android KTX](https://developer.android.com/kotlin/ktx) - reduce boilerplate Kotlin codes
-* [AndroidX](https://developer.android.com/jetpack/androidx) - Fully replaces the Support Library by providing feature parity and new libraries. All new Support Library development will occur in the AndroidX library.  
+* [AndroidX](https://developer.android.com/jetpack/androidx) - Fully replaces the Support Library by providing feature parity and new libraries. All new Support Library development will occur in the AndroidX library.
+* [Espresso](https://developer.android.com/training/testing/espresso) - UI Test
 
 ## TODOs
-* Unit Tests / UI Tests
 * Error Handling - Properly handle network error in Worker
+* Increase test coverage
 * Improve Performance
 
 ## References
