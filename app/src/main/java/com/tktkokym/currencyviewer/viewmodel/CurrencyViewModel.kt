@@ -5,13 +5,11 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.tktkokym.currencyviewer.constants.Constants
+import com.tktkokym.currencyviewer.data.CurrencyItem
 import com.tktkokym.currencyviewer.data.SelectedCurrencyList
 import com.tktkokym.currencyviewer.network.Status
 import com.tktkokym.currencyviewer.repository.CurrencyRepository
-import com.tktkokym.currencyviewer.util.DoubleTrigger
-import com.tktkokym.currencyviewer.util.convertToCurrencyList
-import com.tktkokym.currencyviewer.util.dateTimeToUnixTimeStamp
-import com.tktkokym.currencyviewer.util.getTargetCurrency
+import com.tktkokym.currencyviewer.util.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.util.*
@@ -50,31 +48,23 @@ class CurrencyViewModel: ViewModel(), KoinComponent {
             = Transformations.switchMap(DoubleTrigger(_amountCurrency, repository.getBaseCurrencyFromDB())) {
         val currencyData = it.first
         val baseCurrentList = it.second?.rates?.convertToCurrencyList() ?: emptyList()
+        val timeStamp = it.second?.timestamp ?: Date().dateTimeToUnixTimeStamp()
 
         if (currencyData != null && baseCurrentList.isNotEmpty()) {
-            // get rates of selected currency
-            val newRate =
-                baseCurrentList.find {
-                        item -> item.currency.getTargetCurrency() == currencyData.currency }?.rate ?: 1.0
-
             _selectedCurrencyList.postValue(
-                SelectedCurrencyList(
-                    currencyData.currency,
-                    it.second?.timestamp ?: Date().dateTimeToUnixTimeStamp(),
-                    baseCurrentList.map { item ->
-                        item.copy(
-                            currency = item.currency,
-                            rate = item.rate / newRate * (currencyData.amount)) })
-            )
-
+                getSelectedCurrencyList(currencyData, baseCurrentList, timeStamp))
             _status.postValue(Status.SUCCESS)
         }
         return@switchMap _selectedCurrencyList
     }
 
+    val amountCurrency: LiveData<AmountCurrencyData> get() = _amountCurrency
+
     fun setAmountCurrency(amount: Double, currency: String) {
         _amountCurrency.postValue(AmountCurrencyData(amount, currency))
     }
+
+    fun setStatus(status: Status) { _status.postValue(status) }
 
     data class AmountCurrencyData(val amount: Double, val currency: String)
 

@@ -9,8 +9,11 @@ import androidx.room.OnConflictStrategy
 @Dao
 interface CurrencyRatesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(currencyBaseTable: CurrencyBaseTable)
+    suspend fun insert(currencyBaseTable: CurrencyBaseTable)
 
     @Query("SELECT * FROM currency_table")
     fun getBase(): LiveData<CurrencyBaseTable>
+
+    @Query("SELECT * FROM currency_table WHERE base = :base")
+    fun findByBase(base: String): CurrencyBaseTable
 }

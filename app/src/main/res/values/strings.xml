@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">CurrencyViewer</string>
+    <string name="app_name">Currency Viewer</string>
     <string name="network_error">Network Error</string>
 </resources>

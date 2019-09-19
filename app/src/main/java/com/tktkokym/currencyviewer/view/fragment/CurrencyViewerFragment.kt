@@ -92,7 +92,7 @@ class CurrencyViewerFragment : Fragment() {
                 scope.launch {
                     delay(Constants.DEBOUNCE_DELAY) //debounce timeout
                     if (searchFor != input) return@launch
-                    requestCurrencyUpdate(input, binding.currencySelectSpinner.selectedItem.toString())
+                    requestCurrencyUpdate(input, binding.currencySelectSpinner.selectedItem?.toString().orEmpty())
                 }
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

@@ -27,7 +27,7 @@ class CurrencyRepository: KoinComponent {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         if (it.success && it.timestamp.isOld()) {
-                            insertNewCurrencyToDB(CurrencyBaseTable(it.source, it.timestamp, it.quotes))
+                            currencyRatesDao.insert(CurrencyBaseTable(it.source, it.timestamp, it.quotes))
                         }
                     }
                 }
@@ -37,7 +37,4 @@ class CurrencyRepository: KoinComponent {
 
     // get Currency Data from Room DB
     fun getBaseCurrencyFromDB() = currencyRatesDao.getBase()
-
-    // insert new network response to DB
-    private fun insertNewCurrencyToDB(newCurrencyBase: CurrencyBaseTable) = currencyRatesDao.insert(newCurrencyBase)
 }

@@ -2,11 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:startDestination="@+id/fragment_point_usage">
+            app:startDestination="@+id/fragment_currency_viewer">
 
     <fragment
-            android:id="@+id/fragment_point_usage"
-            android:name="com.tktkokym.currencyviewer.view.fragment.CurrencyViewerFragment"
-            tools:layout="@layout/fragment_currency_viewer" >
+        android:label="@string/app_name"
+        android:id="@+id/fragment_currency_viewer"
+        android:name="com.tktkokym.currencyviewer.view.fragment.CurrencyViewerFragment"
+        tools:layout="@layout/fragment_currency_viewer" >
     </fragment>
 </navigation>
