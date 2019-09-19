@@ -69,7 +69,6 @@ dependencies {
 
     // Koin
     implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
-    androidTestImplementation "org.koin:koin-test:$rootProject.koinVersion"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
@@ -88,17 +87,15 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$rootProject.workManagerVersion"
 
     // test
-    testImplementation 'junit:junit:4.12'
-    testImplementation "androidx.arch.core:core-testing:$rootProject.core_testing"
-    testImplementation "org.mockito:mockito-core:2.25.0"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
-    testImplementation "org.koin:koin-test:$rootProject.koinVersion"
-    androidTestImplementation "androidx.test:rules:1.2.0"
-    androidTestImplementation "androidx.test.ext:junit:1.1.1"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0-alpha02"
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "androidx.test:rules:$rootProject.ruleVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.extJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.core_testing"
-    androidTestImplementation 'org.mockito:mockito-android:2.25.0'
-    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    androidTestImplementation "org.mockito:mockito-android:$rootProject.mockito_core"
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$rootProject.mockitokotlin"
+    androidTestImplementation "org.koin:koin-test:$rootProject.koinVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
     androidTestImplementation "androidx.work:work-testing:$rootProject.workManagerVersion"
 }

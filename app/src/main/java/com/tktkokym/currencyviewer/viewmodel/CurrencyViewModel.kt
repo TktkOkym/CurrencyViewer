@@ -1,11 +1,12 @@
 package com.tktkokym.currencyviewer.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.*
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.tktkokym.currencyviewer.constants.Constants
-import com.tktkokym.currencyviewer.data.CurrencyItem
+import com.tktkokym.currencyviewer.data.AmountCurrencyData
 import com.tktkokym.currencyviewer.data.SelectedCurrencyList
 import com.tktkokym.currencyviewer.network.Status
 import com.tktkokym.currencyviewer.repository.CurrencyRepository
@@ -17,7 +18,8 @@ import java.util.*
 class CurrencyViewModel: ViewModel(), KoinComponent {
     private val repository: CurrencyRepository by inject()
     private val workRequest: PeriodicWorkRequest by inject()
-    private val workManager: WorkManager = WorkManager.getInstance()
+    private val context: Context by inject()
+    private var workManager: WorkManager
     private val _selectedCurrencyList = MutableLiveData<SelectedCurrencyList>()
     private val _amountCurrency = MutableLiveData<AmountCurrencyData>()
     private val _currencyNameList = MutableLiveData<List<String>>()
@@ -26,6 +28,7 @@ class CurrencyViewModel: ViewModel(), KoinComponent {
     val status: LiveData<Status> get() = _status
 
     init {
+        workManager = WorkManager.getInstance(context)
         _status.postValue(Status.LOADING)
         requestPeriodicWorker(isReplace = false)
     }
@@ -65,8 +68,6 @@ class CurrencyViewModel: ViewModel(), KoinComponent {
     }
 
     fun setStatus(status: Status) { _status.postValue(status) }
-
-    data class AmountCurrencyData(val amount: Double, val currency: String)
 
     override fun onCleared() {
         super.onCleared()

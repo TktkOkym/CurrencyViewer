@@ -1,11 +1,11 @@
 package com.tktkokym.currencyviewer.util
 
+import com.tktkokym.currencyviewer.data.AmountCurrencyData
 import com.tktkokym.currencyviewer.data.CurrencyItem
 import com.tktkokym.currencyviewer.data.SelectedCurrencyList
-import com.tktkokym.currencyviewer.viewmodel.CurrencyViewModel
 
 fun getSelectedCurrencyList(
-    currencyData: CurrencyViewModel.AmountCurrencyData,
+    currencyData: AmountCurrencyData,
     baseCurrentList: List<CurrencyItem>,
     timeStamp: Long
 ): SelectedCurrencyList {
